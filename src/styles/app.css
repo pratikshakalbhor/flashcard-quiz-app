@@ -1,0 +1,401 @@
+/* ==========================================================================
+   App layout + component styles. Imported by App.jsx.
+   Sections: shell · sections · buttons · study · flashcard 3D flip ·
+             controls · manage · form · list · empty · responsive
+   ========================================================================== */
+
+/* ----- App shell ---------------------------------------------------------- */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.app__header {
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.app__title {
+  font-size: clamp(1.4rem, 1rem + 2vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app__subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.app__main {
+  flex: 1;
+  width: min(100%, 960px);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-6);
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
+}
+
+/* ----- Sections ----------------------------------------------------------- */
+.study,
+.manage {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.manage__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ----- Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-strong);
+  border-color: var(--color-primary-strong);
+}
+
+.btn--danger {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  background: transparent;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--color-danger-soft);
+}
+
+.btn--sm {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+/* ----- Flashcard: 3D flip -------------------------------------------------
+   Technique: an outer container provides PERSPECTIVE (the "camera"). An inner
+   element carries transform-style: preserve-3d and rotates on the Y axis. Both
+   faces are absolutely stacked and hide their backface, so exactly one is ever
+   visible. Fixed height => no layout shift between faces.
+   ------------------------------------------------------------------------- */
+.flashcard {
+  position: relative;
+  width: 100%;
+  height: clamp(220px, 45vh, 320px);
+  perspective: 1200px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  border-radius: var(--radius-lg);
+}
+
+.flashcard:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.flashcard__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform var(--flip-duration) cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.flashcard.is-flipped .flashcard__inner {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+.flashcard__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  min-height: 0; /* allow inner scrolling area to shrink */
+}
+
+.flashcard__face--back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  background: var(--color-surface-alt);
+}
+
+.flashcard:hover .flashcard__face {
+  border-color: var(--color-primary);
+}
+
+.flashcard__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Long text scrolls inside the face instead of overflowing the card. */
+.flashcard__text {
+  margin: auto;
+  font-size: clamp(1.05rem, 1rem + 1vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-wrap;
+  text-align: center;
+  padding: var(--space-1) 0;
+}
+
+/* ----- Study controls ----------------------------------------------------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.controls__position {
+  flex-basis: 100%;
+  margin: 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- Manage / form ------------------------------------------------------ */
+.form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.form__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field > label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.field textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
+
+.field--invalid input,
+.field--invalid textarea {
+  border-color: var(--color-danger);
+}
+
+.field__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.field__hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.field__hint.is-over {
+  color: var(--color-danger);
+}
+
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* ----- Card list ---------------------------------------------------------- */
+.card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.card-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.card-list__item.is-current {
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+}
+
+.card-list__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  color: inherit;
+}
+
+.card-list__q {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-list__a {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-list__actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+}
+
+.card-list__confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.card-list__confirm-text {
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* ----- Empty state -------------------------------------------------------- */
+.empty {
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* ----- Responsive --------------------------------------------------------- */
+@media (max-width: 480px) {
+  .app__main {
+    padding: var(--space-4) var(--space-3) var(--space-5);
+  }
+
+  .flashcard {
+    height: clamp(200px, 55vh, 300px);
+  }
+
+  .controls .btn {
+    flex: 1 1 auto;
+  }
+}
+
+/* Short landscape phones: keep the card usable. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .flashcard {
+    height: 68vh;
+  }
+}

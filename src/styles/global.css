@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Global reset, design tokens, and base styles.
+   Imported ONCE (in main.jsx). Component-level CSS is imported by the
+   component that owns it.
+   ========================================================================== */
+
+:root {
+  /* Color tokens (light theme) */
+  --color-bg: #f4f2fb;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7f5ff;
+  --color-text: #1f2033;
+  --color-muted: #6b6f8a;
+  --color-border: #e3e1f0;
+  --color-primary: #6d28d9;
+  --color-primary-strong: #5b21b6;
+  --color-primary-soft: rgba(109, 40, 217, 0.12);
+  --color-danger: #dc2626;
+  --color-danger-soft: rgba(220, 38, 38, 0.12);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Shape + depth */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 1px 2px rgba(20, 16, 45, 0.06);
+  --shadow-md: 0 10px 30px -12px rgba(20, 16, 45, 0.28);
+
+  /* Motion */
+  --flip-duration: 500ms;
+
+  --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #12121c;
+    --color-surface: #1c1c2b;
+    --color-surface-alt: #232338;
+    --color-text: #ececf5;
+    --color-muted: #a3a6c2;
+    --color-border: #2e2e46;
+    --color-primary: #a78bfa;
+    --color-primary-strong: #c4b5fd;
+    --color-primary-soft: rgba(167, 139, 250, 0.16);
+    --color-danger: #f87171;
+    --color-danger-soft: rgba(248, 113, 113, 0.16);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Accessible focus ring for keyboard users only */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Respect users who prefer less motion (make the flip instant) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
