@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { isDue, normalizeBox } from '../utils/leitner.js'
 
 /*
- * CardList — every card with Edit / Delete and a "study this" jump.
+ * CardList — every card in the active deck with Edit / Delete and a
+ * "study this" jump.
  *
  * Props
- *   cards          [{ id, question, answer }]
+ *   cards          [{ id, question, answer, box, dueDate }]
  *   currentIndex   number — highlights the card shown in the Study view
- *   onEdit(id), onDelete(id), onSelect(index)
+ *   onEdit(id), onDelete(id), onSelect(id)
  *
  * Delete uses a two-step inline confirmation (no window.confirm) so the action
  * is explicit and keyboard accessible.
@@ -34,11 +36,15 @@ export default function CardList({
           <button
             type="button"
             className="card-list__text"
-            onClick={() => onSelect?.(index)}
+            onClick={() => onSelect?.(card.id)}
             title="Study this card"
           >
             <span className="card-list__q">{card.question}</span>
             <span className="card-list__a">{card.answer}</span>
+            <span className="card-list__tags">
+              <span className="badge">Box {normalizeBox(card.box)}</span>
+              {isDue(card) && <span className="badge badge--due">Due</span>}
+            </span>
           </button>
 
           <div className="card-list__actions">
