@@ -19,7 +19,7 @@ export default defineConfig({
         name: 'Flashcard Quiz App',
         short_name: 'Flashcards',
         description:
-          'A study flashcard quiz app. Flip cards, navigate, and create your own decks. Data persists in your browser.',
+          'A study flashcard app with multiple decks, Leitner spaced repetition, stats, and JSON import/export. Data persists in your browser.',
         theme_color: '#6d28d9',
         background_color: '#f4f2fb',
         display: 'standalone',
