@@ -1,7 +1,14 @@
+import { DEFAULT_DECK_ID, DEFAULT_DECK_NAME } from '../utils/schema.js'
+
 /*
- * Default deck shown the very first time the app runs (before the user has
- * anything saved in localStorage). Edit freely — it's just demo content.
+ * Default deck + cards shown the very first time the app runs (before the
+ * user has anything saved in localStorage). Edit freely — it's demo content.
  */
+export const seedDeck = {
+  id: DEFAULT_DECK_ID,
+  name: DEFAULT_DECK_NAME,
+}
+
 export const seedCards = [
   {
     id: 'seed-1',
